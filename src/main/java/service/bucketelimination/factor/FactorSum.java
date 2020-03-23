@@ -2,6 +2,8 @@ package service.bucketelimination.factor;
 
 import model.FactorModel;
 
+import java.math.BigDecimal;
+
 public class FactorSum {
 
     public static FactorModel sumOut(FactorModel f, Integer var, Integer[] cardinalities) {
@@ -18,11 +20,11 @@ public class FactorSum {
 
     private static FactorModel sumOutEquals1(FactorModel fm) {
         fm.variables.remove(0);
-        double sum = 0;
+        BigDecimal sum = new BigDecimal("0");
         for (int i = 0; i < fm.factor.length; i++) {
-            sum += fm.factor[i];
+            sum = sum.add(fm.factor[i]);
         }
-        fm.factor = new Double[1];
+        fm.factor = new BigDecimal[1];
         fm.factor[0] = sum;
         return fm;
     }
@@ -67,15 +69,15 @@ public class FactorSum {
         int jumpL = fm.factor.length / tempL;
         int jumpR = fm.factor.length / tempR;
         int newFactorSize = fm.factor.length / cardinalities[var];
-        new_fm.factor = new Double[newFactorSize];
+        new_fm.factor = new BigDecimal[newFactorSize];
 
         int newIndex = 0;
         for (int i = 0; i < jumpR; i++) {
             for (int j = 0; j < jumpL; j++) {
                 int index = (i * tempR) + j;
-                double sum = 0;
+                BigDecimal sum = new BigDecimal("0");
                 for (int k = 0; k < cardinalities[var]; k++) {
-                    sum += fm.factor[index + (k * jumpL)];
+                    sum = sum.add(fm.factor[index + (k * jumpL)]);
                 }
                 new_fm.factor[newIndex] = sum;
                 newIndex++;

@@ -3,6 +3,7 @@ package service.bucketelimination.factor;
 import model.EvidenceModel;
 import model.FactorModel;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 public class FactorInstantiate {
@@ -27,7 +28,7 @@ public class FactorInstantiate {
 
             int oldFactorSize = Util.totalCardinality(f.variables, cardinality);
             int newFactorSize = oldFactorSize / cardinality[variable];
-            nf.factor = new Double[newFactorSize];
+            nf.factor = new BigDecimal[newFactorSize];
             f.variables.remove(index);
             nf.variables = f.variables;
             Util.computeStride(nf, cardinality);

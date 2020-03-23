@@ -1,11 +1,12 @@
 package model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class FactorModel implements Cloneable {
     public ArrayList<Integer> variables;
     public ArrayList<Integer> strides;
-    public Double[] factor;
+    public BigDecimal[] factor;
 
     public FactorModel() {
         variables = new ArrayList<>();

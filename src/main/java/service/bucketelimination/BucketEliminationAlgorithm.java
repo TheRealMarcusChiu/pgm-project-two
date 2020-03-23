@@ -11,6 +11,7 @@ import service.util.MinOrdering;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -24,11 +25,16 @@ public class BucketEliminationAlgorithm {
 
     ArrayList<FactorModel> constantFactors = new ArrayList<>();
 
-    public double output;
+    public BigDecimal output;
 
     public BucketEliminationAlgorithm(File file1, File file2) throws IOException {
         this.gm = new GraphicalModel(file1);
         this.em = new EvidenceModel(file2);
+    }
+
+    public BucketEliminationAlgorithm(GraphicalModel gm, EvidenceModel em) {
+        this.gm = gm;
+        this.em = em;
     }
 
     public void start() {
@@ -39,9 +45,9 @@ public class BucketEliminationAlgorithm {
     }
 
     private void compute() {
-        double product = 1;
+        BigDecimal product = new BigDecimal("1");
         for (FactorModel f : constantFactors) {
-            product *= f.factor[0];
+            product = product.multiply(f.factor[0]);
         }
         output = product;
     }
