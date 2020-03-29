@@ -22,10 +22,10 @@ public class FactorProduct {
 
         fn.variables = (ArrayList<Integer>) Arrays.stream(vs).collect(Collectors.toList());
         Util.computeStride(fn, c);
-        fn.factor = new BigDecimal[nFactorSize];
+        fn.factor = new double[nFactorSize];
 
         for (int i = 0; i < nFactorSize; i++) {
-            fn.factor[i] = f1.factor[j].multiply(f2.factor[k]);
+            fn.factor[i] = f1.factor[j] + f2.factor[k];
 
             for (int lvi = vs.length-1; lvi >= 0 ; lvi--) {
                 int lv = vs[lvi];

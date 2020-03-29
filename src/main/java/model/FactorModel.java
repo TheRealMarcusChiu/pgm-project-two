@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class FactorModel implements Cloneable {
     public ArrayList<Integer> variables;
     public ArrayList<Integer> strides;
-    public BigDecimal[] factor;
+    public double[] factor;
 
     public FactorModel() {
         variables = new ArrayList<>();

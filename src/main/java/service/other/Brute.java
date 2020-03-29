@@ -1,7 +1,9 @@
 package service.other;
 
+import ch.obermuhlner.math.big.BigDecimalMath;
 import model.FactorModel;
 import model.GraphicalModel;
+import service.MC;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,17 +20,17 @@ public class Brute {
     }
 
     public BigDecimal computePartitionFunctionValue() throws Exception {
-        BigDecimal sum = new BigDecimal("0");
+        BigDecimal sum = new BigDecimal(0);
         int[] assignment = new int[numVariables];
         boolean endNow;
 
         do {
-            sum = sum.add(computeProduct(assignment));
+            sum = sum.add(BigDecimalMath.pow(new BigDecimal(10), computeProduct(assignment), MC.mathContext));
             endNow = checkEnd(assignment);
             incrementAssignment(assignment);
         } while (!endNow);
 
-        return sum;
+        return BigDecimalMath.log10(sum, MC.mathContext);
     }
 
     private void incrementAssignment(int[] assignment) {
@@ -57,10 +59,10 @@ public class Brute {
 
 //    private double computeProduct(int[] assignment, )
     private BigDecimal computeProduct(int[] assignment) {
-        BigDecimal product = new BigDecimal("1");
+        BigDecimal product = new BigDecimal(0);
 
         for (FactorModel f : gm.factorModels) {
-            product = product.multiply(getValue(f, assignment));
+            product = product.add(getValue(f, assignment));
         }
 
         return product;
@@ -73,6 +75,6 @@ public class Brute {
         }
 
         int index = f.getIndexFromAssignment(localAssignment);
-        return f.factor[index];
+        return new BigDecimal(f.factor[index]);
     }
 }

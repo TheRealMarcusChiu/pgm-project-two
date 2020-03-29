@@ -6,8 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="probabilistic-graphical-models-hw-two" />
         <module name="probabilistic-graphical-models-hw-one" />
+        <module name="probabilistic-graphical-models-hw-two" />
       </profile>
     </annotationProcessing>
   </component>

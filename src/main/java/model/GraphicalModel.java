@@ -5,8 +5,9 @@ import service.bucketelimination.factor.Util;
 
 import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class GraphicalModel implements Cloneable {
@@ -44,9 +45,9 @@ public class GraphicalModel implements Cloneable {
             lines.remove(0);
             FactorModel fm = factorModels.get(i);
             Double[] t = Arrays.stream(lines.remove(0).split("\\s+")).map(Double::parseDouble).toArray(Double[]::new);
-            fm.factor = new BigDecimal[t.length];
+            fm.factor = new double[t.length];
             for (int ii = 0; ii < t.length; ii++) {
-                fm.factor[ii] = new BigDecimal(t[ii]);
+                fm.factor[ii] = Math.log10(t[ii]);
             }
         }
     }
@@ -57,7 +58,7 @@ public class GraphicalModel implements Cloneable {
         gm.cardinalities = this.cardinalities.clone();
         gm.factorModels = new ArrayList<>();
         for (FactorModel fm : this.factorModels) {
-            factorModels.add(fm.clone());
+            gm.factorModels.add(fm.clone());
         }
         return gm;
     }

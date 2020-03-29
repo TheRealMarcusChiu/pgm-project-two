@@ -2,10 +2,11 @@
 /Users/marcuschiu/Desktop/programs/java/class-projects/probabilistic-graphical-models-hw-two/src/main/java/service/bucketelimination/factor/FactorInstantiate.java
 /Users/marcuschiu/Desktop/programs/java/class-projects/probabilistic-graphical-models-hw-two/src/main/java/model/BucketModel.java
 /Users/marcuschiu/Desktop/programs/java/class-projects/probabilistic-graphical-models-hw-two/src/main/java/model/EvidenceModel.java
-/Users/marcuschiu/Desktop/programs/java/class-projects/probabilistic-graphical-models-hw-two/src/main/java/service/util/BigDecimalMath.java
 /Users/marcuschiu/Desktop/programs/java/class-projects/probabilistic-graphical-models-hw-two/src/main/java/service/SamplingBasedVariableEliminationAndConditioning.java
-/Users/marcuschiu/Desktop/programs/java/class-projects/probabilistic-graphical-models-hw-two/src/main/java/Main.java
+/Users/marcuschiu/Desktop/programs/java/class-projects/probabilistic-graphical-models-hw-two/src/main/java/service/other/BigDecimalMath2.java
+/Users/marcuschiu/Desktop/programs/java/class-projects/probabilistic-graphical-models-hw-two/src/main/java/service/MC.java
 /Users/marcuschiu/Desktop/programs/java/class-projects/probabilistic-graphical-models-hw-two/src/main/java/service/wcutset/model/BucketModel.java
+/Users/marcuschiu/Desktop/programs/java/class-projects/probabilistic-graphical-models-hw-two/src/main/java/MainApp.java
 /Users/marcuschiu/Desktop/programs/java/class-projects/probabilistic-graphical-models-hw-two/src/main/java/service/bucketelimination/factor/FactorProduct.java
 /Users/marcuschiu/Desktop/programs/java/class-projects/probabilistic-graphical-models-hw-two/src/main/java/service/bucketelimination/factor/Util.java
 /Users/marcuschiu/Desktop/programs/java/class-projects/probabilistic-graphical-models-hw-two/src/main/java/model/GraphicalModel.java

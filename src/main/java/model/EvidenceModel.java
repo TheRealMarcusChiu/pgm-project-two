@@ -28,4 +28,11 @@ public class EvidenceModel implements Cloneable {
             evidence.put(numbers[(2*i)+1], numbers[(2*i)+2]);
         }
     }
+
+    public EvidenceModel clone() throws CloneNotSupportedException {
+        // Assign the shallow copy to new reference variable t
+        EvidenceModel em = (EvidenceModel)super.clone();
+        em.evidence = (HashMap)this.evidence.clone();
+        return em;
+    }
 }

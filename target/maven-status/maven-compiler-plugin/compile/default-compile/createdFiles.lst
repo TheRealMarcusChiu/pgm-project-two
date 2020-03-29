@@ -1,10 +1,10 @@
+service/MC.class
+MainApp.class
 service/SamplingBasedVariableEliminationAndConditioning.class
 service/util/MinOrdering.class
 model/BucketModel.class
-service/other/Brute.class
 model/FactorModel.class
 model/GraphicalModel.class
-Main.class
 service/bucketelimination/factor/FactorSum.class
 service/wcutset/model/BucketModel.class
 service/bucketelimination/factor/FactorInstantiate.class
@@ -12,5 +12,4 @@ service/bucketelimination/factor/FactorProduct.class
 service/bucketelimination/factor/Util.class
 service/bucketelimination/BucketEliminationAlgorithm.class
 model/EvidenceModel.class
-service/util/BigDecimalMath.class
 service/wcutset/WCutset.class

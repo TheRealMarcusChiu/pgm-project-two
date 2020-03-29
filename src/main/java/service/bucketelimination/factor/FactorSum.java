@@ -1,6 +1,8 @@
 package service.bucketelimination.factor;
 
+import ch.obermuhlner.math.big.BigDecimalMath;
 import model.FactorModel;
+import service.MC;
 
 import java.math.BigDecimal;
 
@@ -22,10 +24,12 @@ public class FactorSum {
         fm.variables.remove(0);
         BigDecimal sum = new BigDecimal("0");
         for (int i = 0; i < fm.factor.length; i++) {
-            sum = sum.add(fm.factor[i]);
+//            sum = sum.add(fm.factor[i]);
+            sum = sum.add(BigDecimalMath.pow(new BigDecimal(10), new BigDecimal(fm.factor[i]), MC.mathContext));
         }
-        fm.factor = new BigDecimal[1];
-        fm.factor[0] = sum;
+        fm.factor = new double[1];
+//        fm.factor[0] = sum;
+        fm.factor[0] = BigDecimalMath.log10(sum, MC.mathContext).doubleValue();
         return fm;
     }
 
@@ -69,17 +73,19 @@ public class FactorSum {
         int jumpL = fm.factor.length / tempL;
         int jumpR = fm.factor.length / tempR;
         int newFactorSize = fm.factor.length / cardinalities[var];
-        new_fm.factor = new BigDecimal[newFactorSize];
+        new_fm.factor = new double[newFactorSize];
 
         int newIndex = 0;
         for (int i = 0; i < jumpR; i++) {
             for (int j = 0; j < jumpL; j++) {
                 int index = (i * tempR) + j;
-                BigDecimal sum = new BigDecimal("0");
+                BigDecimal sum = new BigDecimal(0d);
                 for (int k = 0; k < cardinalities[var]; k++) {
-                    sum = sum.add(fm.factor[index + (k * jumpL)]);
+//                    sum += fm.factor[index + (k * jumpL)];
+                    sum = sum.add(BigDecimalMath.pow(new BigDecimal(10), new BigDecimal(fm.factor[index + (k * jumpL)]), MC.mathContext));
                 }
-                new_fm.factor[newIndex] = sum;
+//                new_fm.factor[newIndex] = sum;
+                new_fm.factor[newIndex] = BigDecimalMath.log10(sum, MC.mathContext).doubleValue();
                 newIndex++;
             }
         }
