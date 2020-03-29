@@ -27,7 +27,7 @@ public class MainApp {
                 Random generator = new Random((long) (Math.random() * 1000000000000000L));
 
                 SamplingBasedVariableEliminationAndConditioning s = new SamplingBasedVariableEliminationAndConditioning(file1, file2, n, w, generator);
-//                System.out.println("s - output: " + s.logProbabilityEstimate);
+                System.out.println("s - output: " + s.log10Estimate);
 
 //                AdaptiveSamplingBasedVariableEliminationAndConditioning as = new AdaptiveSamplingBasedVariableEliminationAndConditioning(file1, file2, n, w, generator);
 //                System.out.println("a - output: " + as.logProbabilityEstimate);
