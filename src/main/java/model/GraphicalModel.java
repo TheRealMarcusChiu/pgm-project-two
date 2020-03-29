@@ -44,7 +44,9 @@ public class GraphicalModel implements Cloneable {
         for (int i = 0; i < numCliques; i++) {
             lines.remove(0);
             FactorModel fm = factorModels.get(i);
-            Double[] t = Arrays.stream(lines.remove(0).split("\\s+")).map(Double::parseDouble).toArray(Double[]::new);
+            String str = lines.remove(0);
+            String[] strArray = str.split(" ");
+            Double[] t = Arrays.stream(strArray).map(Double::valueOf).toArray(Double[]::new);
             fm.factor = new double[t.length];
             for (int ii = 0; ii < t.length; ii++) {
                 fm.factor[ii] = Math.log10(t[ii]);

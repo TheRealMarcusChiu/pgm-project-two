@@ -1,12 +1,12 @@
 package service;
 
+import ch.obermuhlner.math.big.BigDecimalMath;
 import model.EvidenceModel;
 import model.GraphicalModel;
 import service.bucketelimination.BucketEliminationAlgorithm;
 import service.wcutset.WCutset;
 
 import java.io.File;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,10 +15,10 @@ import java.util.Random;
 
 public class AdaptiveSamplingBasedVariableEliminationAndConditioning {
 
-    public double logProbabilityEstimate;
+    public double log10Estimate;
 
-    public ArrayList<Double> weights = new ArrayList<>();
-    public HashMap<Integer, HashMap<Integer, Double>> variableDomainWeights = new HashMap<>();
+    public ArrayList<BigDecimal> weights = new ArrayList<>();
+    public HashMap<Integer, HashMap<Integer, BigDecimal>> variableDomainWeights = new HashMap<>();
     public HashMap<Integer, HashMap<Integer,Double>> variableDomainProbabilities = new HashMap<>();
     public Random random;
 
@@ -32,7 +32,7 @@ public class AdaptiveSamplingBasedVariableEliminationAndConditioning {
 
         variableDomain_Instantiate(wCutset, gm);
 
-        BigDecimal z = new BigDecimal(0);
+        BigDecimal Z = new BigDecimal(0);
 
         EvidenceModel emClone;
         GraphicalModel gmClone;
@@ -46,9 +46,10 @@ public class AdaptiveSamplingBasedVariableEliminationAndConditioning {
             BucketEliminationAlgorithm bea = new BucketEliminationAlgorithm(gmClone, emClone);
             bea.start();
 
-            double logProbOfWCutset = Math.log10(computeProbability(sample));
-            double weight =  bea.logProbability - logProbOfWCutset;
-            z = z.add(new BigDecimal(weight));
+            BigDecimal ePartition = BigDecimalMath.pow(new BigDecimal(10), new BigDecimal(bea.logProbability), MC.mathContext);
+            BigDecimal probOfWCutSet = new BigDecimal(computeProbability(sample));
+            BigDecimal weight = ePartition.divide(probOfWCutSet, MC.mathContext);
+            Z = Z.add(weight);
 
             weights.add(weight);
             variableDomain_Weights_Update(sample, weight);
@@ -58,9 +59,11 @@ public class AdaptiveSamplingBasedVariableEliminationAndConditioning {
                 System.out.print(i + ":" + weight + " - ");
             }
         }
+
         System.out.println("");
-        BigDecimal zOverN = z.divide(new BigDecimal(n), MC.mathContext);
-        logProbabilityEstimate = zOverN.doubleValue();
+        BigDecimal zOverN = Z.divide(new BigDecimal(n), MC.mathContext);
+        BigDecimal zOverNLog10 = BigDecimalMath.log10(zOverN, MC.mathContext);
+        log10Estimate = zOverNLog10.doubleValue();
     }
 
     private double computeProbability(HashMap<Integer, Integer> sample) {
@@ -90,40 +93,40 @@ public class AdaptiveSamplingBasedVariableEliminationAndConditioning {
             variableDomainProbabilities.put(variable, domainProbabilities);
 
             // instantiate weight counts
-            HashMap<Integer, Double> domainWeights = new HashMap<>();
+            HashMap<Integer, BigDecimal> domainWeights = new HashMap<>();
             for (int i = 0; i < cardinality; i++ ) {
-                domainWeights.put(i, 0.0);
+                domainWeights.put(i, new BigDecimal(0));
             }
             variableDomainWeights.put(variable, domainWeights);
         }
     }
 
-    private void variableDomain_Weights_Update(HashMap<Integer, Integer> sample, Double weight) {
+    private void variableDomain_Weights_Update(HashMap<Integer, Integer> sample, BigDecimal weight) {
         for (Map.Entry<Integer, Integer> entry : sample.entrySet()) {
             Integer variable = entry.getKey();
             Integer domainValue = entry.getValue();
 
-            HashMap<Integer, Double> domainWeights = variableDomainWeights.get(variable);
-            domainWeights.put(domainValue, domainWeights.get(domainValue) + weight);
+            HashMap<Integer, BigDecimal> domainWeights = variableDomainWeights.get(variable);
+            domainWeights.put(domainValue, domainWeights.get(domainValue).add(weight));
         }
     }
 
     private void variableDomain_Probabilities_Update() {
-        double totalWeight = 0.0;
-        for (double weight : weights) {
-            totalWeight += weight;
+        BigDecimal totalWeight = new BigDecimal(0.0);
+        for (BigDecimal weight : weights) {
+            totalWeight = totalWeight.add(weight);
         }
 
-        for (Map.Entry<Integer, HashMap<Integer, Double>> variableDomainWeight : variableDomainWeights.entrySet()) {
+        for (Map.Entry<Integer, HashMap<Integer, BigDecimal>> variableDomainWeight : variableDomainWeights.entrySet()) {
             Integer variable = variableDomainWeight.getKey();
-            HashMap<Integer, Double> domainWeights = variableDomainWeight.getValue();
+            HashMap<Integer, BigDecimal> domainWeights = variableDomainWeight.getValue();
 
             HashMap<Integer, Double> domainProbabilities = variableDomainProbabilities.get(variable);
-            for (Map.Entry<Integer, Double> entry : domainWeights.entrySet()) {
+            for (Map.Entry<Integer, BigDecimal> entry : domainWeights.entrySet()) {
                 Integer domain = entry.getKey();
-                Double weight = entry.getValue();
+                BigDecimal weight = entry.getValue();
 
-                domainProbabilities.put(domain, weight / totalWeight);
+                domainProbabilities.put(domain, weight.divide(totalWeight, MC.mathContext).doubleValue());
             }
         }
     }

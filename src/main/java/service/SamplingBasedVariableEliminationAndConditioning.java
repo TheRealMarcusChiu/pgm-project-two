@@ -47,9 +47,9 @@ public class SamplingBasedVariableEliminationAndConditioning {
         }
 
         System.out.println("");
-        BigDecimal zOverN2 = Z.divide(new BigDecimal(n), MC.mathContext);
-        BigDecimal zOverN2log10 = BigDecimalMath.log10(zOverN2, MC.mathContext);
-        log10Estimate = zOverN2log10.doubleValue();
+        BigDecimal zOverN = Z.divide(new BigDecimal(n), MC.mathContext);
+        BigDecimal zOverNLog10 = BigDecimalMath.log10(zOverN, MC.mathContext);
+        log10Estimate = zOverNLog10.doubleValue();
     }
 
     private double computeProbability(ArrayList<Integer> wCutset, GraphicalModel gm) {
