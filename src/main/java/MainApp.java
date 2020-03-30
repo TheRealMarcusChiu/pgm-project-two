@@ -11,10 +11,6 @@ import java.util.Random;
 public class MainApp {
 
     public static void main(String args[]) throws Exception {
-        runFile("Grids_14");
-        runFile("Grids_15");
-        runFile("Grids_16");
-        runFile("Grids_17");
         runFile("Grids_18");
     }
 
